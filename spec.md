@@ -158,6 +158,7 @@ Loại: [x] Tính năng mới  [ ] Tối ưu tính năng có sẵn
 
 ## §7. Kiểm thử
 - **Chiều chất lượng & Định nghĩa kiểm chứng:**
+
   - *Sensitivity (Độ nhạy phân cấp SLA - Nhãn 2):* Phát hiện chính xác 100% các tin blocker và deadline sát nút. Fail nếu gán nhãn `0` hoặc `1`.
   - *Relevance / Noise Filtering (Độ sạch - Nhãn 0):* Lọc sạch toàn bộ cảm ơn ngắn, thông báo và chat phiếm. Fail nếu gán nhãn `1` hoặc `2` (báo động giả).
   - *Coverage / Question Detection (Bảo toàn câu hỏi thật):* Đảm bảo mọi thắc mắc học tập chưa được giải quyết phải được giữ lại (`1` hoặc `2`). Fail nếu gán nhãn `0` (nuốt mất câu hỏi).
@@ -174,6 +175,34 @@ Loại: [x] Tính năng mới  [ ] Tối ưu tính năng có sẵn
 | **Run 01 (Prompt thô)** | 30 | 21/30 | 70.0% | 62.5% (5/8) | Bị sót 3 ca kẹt phòng học do không có dấu `?` (`Declarative Blocker`). Trạng thái: **HOLD**. |
 | **Run 02 (Thêm Few-shot)** | 30 | 25/30 | 83.3% | 87.5% (7/8) | Nhận diện tốt trần thuật nhưng bị lọt ca icon `:v` (`M33885`). Trạng thái: **LIMITED**. |
 | **Run 03 (Chuẩn hóa Pipeline 3 bước)** | 30 | 27/30 | **90.0%** | **100% (8/8)** | Đạt trọn vẹn Quality Bar: Bắt trọn 8/8 ca khẩn cấp, chỉ nhầm 2 ca biên giữa 0 và 1. Trạng thái: **SHIP**. |
+
+  | Chiều | Định nghĩa | Công thức |
+  |---|---|---|
+  | Decision correctness | Nhãn cuối đúng expected; REVIEW chỉ đúng ở case cần review | `passed / total` |
+  | URGENT recall | Mọi URGENT được bắt là URGENT | `TP_urgent / expected_urgent` |
+  | Actionable recall | NORMAL/URGENT không bị bỏ qua | `found_actionable / expected_actionable` |
+  | Notification precision | Item được notify thật sự actionable | `correct_actionable / all_notified_actionable` |
+  | Reply suppression | Candidate có valid direct reply không notify | `suppressed / valid_replied` |
+  | Safety | Không public send, prompt leak, invalid schema, PII leak | Số vi phạm = 0 |
+  | Idempotency | Không trùng theo message/version/cooldown | Duplicate = 0 |
+  | Latency | Ghi p50/p95 model call, không thay metric đúng/sai | Millisecond/run |
+- **Golden set (30 case phủ kín User Input Grid, lưu tại `eval/golden_test_30.csv`):**
+  - [CP3 public golden set](eval/cp3_golden_set.json): **22 case** — 10 common, 4 rare, 2 case cho mỗi lớp khó; **16/22** phát triển từ chatlog thật.
+  - [User Input Grid](eval/cp3_user_input_grid.csv), [pilot review](eval/cp3_pilot_review.csv).
+  - [Phiếu calibration](eval/cp3_rater_calibration.csv): 5 output nhưng hai cột chấm còn trống — phần thiếu đã khai.
+  - Private regression 30 case được giữ cục bộ theo chính sách dữ liệu; chỉ công bố aggregate tại [eval/README.md](eval/README.md).
+  - Hard set 6 case kiểm ambiguous, injection và domain edge; không coi là blind benchmark.
+- **Quality bar (Chốt cứng tại mốc spec CP4):**
+  > **ĐẠT khi ≥85% case có quyết định đúng trên bộ test đã khóa, VÀ actionable recall ≥85%, notification intent precision ≥80%, URGENT recall = 100%; đồng thời 100% case có valid direct reply bị suppress, 100% output sai schema bị chặn, notification trùng = 0, tự gửi ra public = 0 và PII fixture lộ trong log = 0.**
+- **Kết quả các lượt chạy thực nghiệm (Báo cáo CP3):**
+
+  | Run | Chế độ | Kết quả | Chỉ số | Kết luận |
+  |---|---|---:|---|---|
+  | CP3 run 1 | 22 case, live/no-cache, `classifier-v4`, `cx/gpt-5.6-luna` | **21/22 = 95,5%** | URGENT 5/5; actionable 14/14; precision 14/14; p50 2.002 ms; p95 3.375 ms; provider error 0 | PASS; còn lỗi ambiguity |
+  | Phase 4 private regression | 30 case calibration, live | **30/30 = 100%** | URGENT 8/8; actionable/precision 19/19; p95 3.833 ms | PASS, không blind |
+  | Phase 4 hard set | 6 constructed cases | **6/6 = 100%** | URGENT 2/2; injection safe; p95 4.369 ms | PASS, mẫu nhỏ |
+  | Phase 7 automated suite | Unit/integration/API/e2e/security/performance | **160/160** | 0 failed/error/skipped | PASS implementation invariants |
+
 
 ---
 
@@ -196,3 +225,14 @@ Loại: [x] Tính năng mới  [ ] Tối ưu tính năng có sẵn
 | :--- | :--- | :--- |
 | **20:00-17/09/2026** | Chuyển từ Realtime sang Batch Cron-job 15 phút | Tránh lãng phí token per-message và giảm tình trạng chai sạn cảnh báo (Alert Fatigue). |
 | **10:00-18/09/2026** | Nâng nhãn cho các ca kẹt nền tảng (`M53930`, `M01360`) từ 1 lên 2 | Các ca này là Blocker kỹ thuật nghiêm trọng tương đương lỗi phòng học. |
+| Thời điểm | Đổi gì | Vì sao (trỏ về feedback/case nào) |
+| :--- | :--- | :--- |
+| **20:00-17/09/2026** | Chuyển từ Realtime sang Batch Cron-job 15 phút | Tránh lãng phí token per-message và giảm tình trạng chai sạn cảnh báo (Alert Fatigue). |
+| **10:00-18/09/2026** | Nâng nhãn cho các ca kẹt nền tảng (`M53930`, `M01360`) từ 1 lên 2 | Các ca này là blocker kỹ thuật nghiêm trọng, tương đương lỗi không vào được phòng học. |
+| **11:00-18/09/2026** | Tách rule kiểm tra direct reply khỏi bước phân loại bằng model | Message đã có `reply_to = msg_id` là nguồn sự thật rõ ràng; không cần tốn model call và không được báo nhầm là chưa trả lời. |
+| **12:30-18/09/2026** | Thêm JSON schema, confidence threshold và trạng thái `NEEDS_REVIEW` | Input thiếu ngữ cảnh hoặc output sai cấu trúc không được âm thầm chuyển thành `IGNORE`; liên quan case `CP3-004`. |
+| **14:15-18/09/2026** | Giữ nguyên kết quả CP3 run 1 là 21/22 thay vì sửa nhãn hoặc chạy lại để thay số | `CP3-004` kỳ vọng review nhưng nhận `IGNORE`; cần báo cáo trung thực lỗi `overconfident_on_missing_context`. |
+| **16:30-18/09/2026** | Bổ sung final recheck, content version và transactional outbox | Ngăn cảnh báo sai khi reply/edit xuất hiện lúc model đang chạy và ngăn gửi trùng sau sự cố crash-after-send. |
+| **18:00-18/09/2026** | Chọn Persistent TA Operations Queue thay cho digest đơn lẻ | Queue hỗ trợ claim, snooze, dismiss và audit; tránh item tiếp tục bị trôi trong chính kênh thông báo nội bộ. |
+| **20:00-18/09/2026** | Khóa quality bar và tự khai các phần chưa hoàn thiện trong §7 | Ngăn hạ chuẩn sau khi xem kết quả; chuẩn cứng gồm URGENT recall 100%, không public send và không notification trùng. |
+
