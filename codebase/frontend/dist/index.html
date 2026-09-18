@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Dashboard phát hiện và phân loại câu hỏi Discord chưa được trả lời."
+    />
+    <title>PulseDesk · Discord Support Radar</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#" aria-label="PulseDesk">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" role="img">
+              <path d="M6 19.5C6 12.6 10.2 7 16.7 7c5.8 0 9.3 3.7 9.3 8.9 0 5.1-3.7 9.1-9.1 9.1H8l3.2-3.4A9.5 9.5 0 0 1 6 19.5Z" />
+              <path class="brand-pulse" d="m11 16 2.5 2.7 3.1-6.1 2.4 4.2h3" />
+            </svg>
+          </span>
+          <span>
+            <strong>PulseDesk</strong>
+            <small>Discord Support Radar</small>
+          </span>
+        </a>
+
+        <nav class="side-nav" aria-label="Điều hướng chính">
+          <button class="nav-item active" type="button" data-view="live">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h3l2-5 4 10 2-5h5" /></svg>
+            Live classifier
+          </button>
+          <button class="nav-item" type="button" data-view="evaluation">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V9m7 10V5m7 14v-7" /></svg>
+            Golden evaluation
+          </button>
+        </nav>
+
+        <div class="sidebar-note">
+          <div class="note-icon">AI</div>
+          <div>
+            <strong>Human in control</strong>
+            <p>AI chỉ phân loại. TA quyết định và tự phản hồi học viên.</p>
+          </div>
+        </div>
+
+        <div class="sidebar-footer">
+          <span class="privacy-dot"></span>
+          <span>PII redaction bật</span>
+          <span class="version">v0.3</span>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">K4 · Track B</p>
+            <h1>Unanswered Question Radar</h1>
+          </div>
+          <div class="topbar-actions">
+            <div class="live-status" id="providerStatus">
+              <span class="status-pulse"></span>
+              <span>Đang kết nối AI…</span>
+            </div>
+            <div class="cp-badge">
+              <span>CP3</span>
+              AI thật + đo lượt đầu
+            </div>
+          </div>
+        </header>
+
+        <section class="view active" id="liveView" aria-labelledby="liveHeading">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Live decision</p>
+              <h2 id="liveHeading">Tin nào cần TA can thiệp?</h2>
+            </div>
+            <div class="boundary-pill">Không tự trả lời · Không tự tag</div>
+          </div>
+
+          <div class="demo-grid">
+            <section class="panel queue-panel" aria-label="Các case demo">
+              <div class="panel-header">
+                <div>
+                  <p class="panel-kicker">Demo queue</p>
+                  <h3>Case an toàn để quay</h3>
+                </div>
+                <span class="count-badge" id="caseCount">4</span>
+              </div>
+              <div class="queue-list" id="caseList"></div>
+              <button class="add-case" type="button" id="customCaseButton">
+                <span>+</span> Nhập nội dung khác
+              </button>
+            </section>
+
+            <section class="panel composer-panel">
+              <div class="message-source">
+                <div class="avatar">HV</div>
+                <div>
+                  <strong>Học viên ẩn danh</strong>
+                  <span>channel_10 · chưa có direct reply</span>
+                </div>
+                <span class="age-chip" id="ageChip">12 phút</span>
+              </div>
+
+              <label class="message-label" for="messageInput">Nội dung đang chờ</label>
+              <textarea
+                id="messageInput"
+                rows="5"
+                maxlength="2000"
+                spellcheck="false"
+                aria-describedby="messageHelp"
+              ></textarea>
+              <div class="input-footer" id="messageHelp">
+                <span><span class="lock-icon">⌁</span> Redact trước khi gửi model</span>
+                <span id="characterCount">0 / 2.000</span>
+              </div>
+
+              <div class="signal-row">
+                <div class="signal">
+                  <span class="signal-icon violet">01</span>
+                  <div><small>Rule layer</small><strong>Candidate hợp lệ</strong></div>
+                </div>
+                <div class="signal">
+                  <span class="signal-icon cyan">02</span>
+                  <div><small>Reply check</small><strong>Chưa được trả lời</strong></div>
+                </div>
+                <div class="signal">
+                  <span class="signal-icon amber">03</span>
+                  <div><small>AI boundary</small><strong>Chỉ phân loại</strong></div>
+                </div>
+              </div>
+
+              <button class="primary-button" type="button" id="classifyButton">
+                <span class="button-spark" aria-hidden="true">✦</span>
+                <span class="button-text">Phân loại bằng AI thật</span>
+                <span class="button-arrow" aria-hidden="true">→</span>
+              </button>
+              <p class="call-note">Mỗi lần bấm tạo một request mới tới 9Router, không dùng cache.</p>
+            </section>
+
+            <section class="panel result-panel" id="resultPanel" aria-live="polite">
+              <div class="result-idle" id="resultIdle">
+                <div class="radar-visual" aria-hidden="true">
+                  <span></span><span></span><span></span>
+                  <i></i>
+                </div>
+                <p class="panel-kicker">AI decision</p>
+                <h3>Sẵn sàng phân loại</h3>
+                <p>Chọn một case, sau đó gọi AI để nhận intent và mức ưu tiên.</p>
+              </div>
+
+              <div class="result-loading hidden" id="resultLoading">
+                <div class="scan-loader"><span></span></div>
+                <p class="panel-kicker">9Router · live request</p>
+                <h3>Đang đọc ngữ cảnh…</h3>
+                <div class="loading-steps">
+                  <span class="done">Redact dữ liệu</span>
+                  <span class="active">Phân loại intent</span>
+                  <span>Kiểm tra schema</span>
+                </div>
+              </div>
+
+              <div class="result-content hidden" id="resultContent">
+                <div class="result-topline">
+                  <span class="live-call-badge"><i></i> LIVE AI CALL</span>
+                  <span class="trace-id" id="traceId">—</span>
+                </div>
+                <div class="decision-hero">
+                  <div class="confidence-ring" id="confidenceRing">
+                    <div><strong id="confidenceValue">—</strong><small>confidence</small></div>
+                  </div>
+                  <div>
+                    <p class="panel-kicker">Kết quả cuối</p>
+                    <h3 class="decision-label" id="decisionLabel">—</h3>
+                    <p id="decisionDescription">—</p>
+                  </div>
+                </div>
+                <div class="decision-details">
+                  <div><small>Intent</small><strong id="intentValue">—</strong></div>
+                  <div><small>Priority</small><strong id="priorityValue">—</strong></div>
+                  <div><small>Latency</small><strong id="latencyValue">—</strong></div>
+                  <div><small>Model</small><strong id="modelValue">—</strong></div>
+                </div>
+                <div class="risk-hints" id="riskHints"></div>
+                <div class="boundary-callout">
+                  <span>✓</span>
+                  <p><strong>Đúng boundary:</strong> AI không gửi tin nhắn và không gọi Discord.</p>
+                </div>
+              </div>
+
+              <div class="result-error hidden" id="resultError">
+                <div class="error-mark">!</div>
+                <p class="panel-kicker">Graceful failure</p>
+                <h3>Chưa thể phân loại</h3>
+                <p id="errorMessage">Provider đang tạm gián đoạn.</p>
+                <button type="button" id="retryButton">Thử lại</button>
+              </div>
+            </section>
+          </div>
+
+          <section class="proof-strip" aria-label="Bằng chứng CP3">
+            <div class="proof-title">
+              <span class="proof-icon">✓</span>
+              <div><small>CP3 evidence</small><strong>Đủ dữ kiện cho lượt đo đầu</strong></div>
+            </div>
+            <div class="proof-metric"><strong id="proofCases">22</strong><span>golden cases</span></div>
+            <div class="proof-metric"><strong id="proofAccuracy">95%</strong><span>accuracy</span></div>
+            <div class="proof-metric"><strong id="proofUrgent">5/5</strong><span>urgent recall</span></div>
+            <div class="proof-metric"><strong id="proofErrors">0</strong><span>provider errors</span></div>
+            <button class="text-button" type="button" data-view-target="evaluation">Xem bảng đo <span>→</span></button>
+          </section>
+        </section>
+
+        <section class="view" id="evaluationView" aria-labelledby="evaluationHeading">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Measured, not vibes</p>
+              <h2 id="evaluationHeading">Golden evaluation</h2>
+            </div>
+            <span class="report-version" id="reportVersion">classifier-v4</span>
+          </div>
+
+          <div class="evaluation-grid">
+            <article class="metric-card featured">
+              <div class="metric-card-top"><span>Overall accuracy</span><i>Locked set</i></div>
+              <strong id="evalAccuracy">95%</strong>
+              <div class="metric-track"><span id="evalAccuracyBar"></span></div>
+              <p><b id="evalCorrect">21/22</b> case khớp nhãn đã review</p>
+            </article>
+            <article class="metric-card">
+              <div class="metric-card-top"><span>Urgent recall</span><i>Hard gate</i></div>
+              <strong id="evalUrgent">5/5</strong>
+              <p>Không bỏ sót case cần can thiệp ngay.</p>
+            </article>
+            <article class="metric-card">
+              <div class="metric-card-top"><span>Actionable recall</span><i>1 + 2</i></div>
+              <strong id="evalActionable">19/19</strong>
+              <p>Phát hiện đủ câu hỏi cần TA hỗ trợ.</p>
+            </article>
+            <article class="metric-card">
+              <div class="metric-card-top"><span>Notification precision</span><i>Signal</i></div>
+              <strong id="evalPrecision">19/19</strong>
+              <p>Không đẩy chat phiếm vào hàng chờ TA.</p>
+            </article>
+          </div>
+
+          <div class="evaluation-detail-grid">
+            <section class="panel matrix-panel">
+              <div class="panel-header">
+                <div><p class="panel-kicker">Confusion matrix</p><h3>Nhãn thật × dự đoán</h3></div>
+                <span class="small-note">30 cases</span>
+              </div>
+              <div class="matrix-wrap">
+                <table class="matrix-table">
+                  <thead><tr><th>Thật \ Đoán</th><th>IGNORE</th><th>NORMAL</th><th>URGENT</th><th>REVIEW</th></tr></thead>
+                  <tbody id="matrixBody"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="panel quality-panel">
+              <div class="panel-header">
+                <div><p class="panel-kicker">Quality bar</p><h3>Ba điều kiện cứng</h3></div>
+                <span class="passed-badge">PASSED</span>
+              </div>
+              <div class="quality-list" id="qualityList">
+                <div><span>Urgent recall = 100%</span><strong>Đạt</strong></div>
+                <div><span>Actionable recall ≥ 85%</span><strong>Đạt</strong></div>
+                <div><span>Notification precision ≥ 80%</span><strong>Đạt</strong></div>
+              </div>
+              <div class="calibration-note">
+                <span>i</span>
+                <p>Đây là regression/calibration set đã biết, chưa phải blind benchmark.</p>
+              </div>
+              <button class="secondary-button" type="button" data-view-target="live">← Quay lại live demo</button>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status"></div>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

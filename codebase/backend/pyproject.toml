@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "discord-unanswered-queue"
+version = "0.1.0"
+description = "Discord unanswered-question queue prototype"
+requires-python = ">=3.10"
+dependencies = [
+    "httpx>=0.27,<1",
+    "pydantic>=2.10,<3",
+    "pydantic-settings>=2.7,<3",
+    "sqlalchemy>=2.0,<3",
+    "tzdata>=2025.2; platform_system == 'Windows'",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3,<9",
+]
+
+[project.scripts]
+ingest-messages = "app.ingestion.cli:main"
+evaluate-rules = "app.rules.cli:main"
+classify-candidates = "app.classifier.cli:main"
+validate-datasets = "app.eval.dataset_validator:main"
+evaluate-classifier = "app.eval.classifier_runner:main"
+evaluate-cp3 = "app.eval.cp3_runner:main"
+demo-cp3 = "app.demo.server:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+markers = [
+    "private_data: tests that read local private datasets through environment variables",
+]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]

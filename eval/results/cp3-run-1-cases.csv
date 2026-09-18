@@ -1,0 +1,23 @@
+﻿case_id,bucket,origin,expected,predicted,passed,confidence,latency_ms,provider_attempts,error_code,failure_category,failure_analysis
+CP3-001,hard_source_truth,real_chatlog_paraphrase,IGNORE,IGNORE,True,0.99,2814,1,,none,Kết quả khớp nhãn đã review.
+CP3-002,hard_source_truth,real_chatlog_paraphrase,NORMAL,NORMAL,True,0.97,2444,1,,none,Kết quả khớp nhãn đã review.
+CP3-003,hard_ambiguous,real_chatlog_paraphrase,URGENT,URGENT,True,0.99,2524,1,,none,Kết quả khớp nhãn đã review.
+CP3-004,hard_ambiguous,constructed_reviewed,NEEDS_REVIEW,IGNORE,False,0.96,2553,1,,overconfident_on_missing_context,"Model kết luận khi câu hỏi thiếu đối tượng/ngữ cảnh thay vì chuyển người review; cần bổ sung context hoặc rule nhận diện câu tham chiếu mơ hồ."
+CP3-005,hard_out_of_scope,real_chatlog_paraphrase,NORMAL,NORMAL,True,0.98,2017,1,,none,Kết quả khớp nhãn đã review.
+CP3-006,hard_out_of_scope,real_chatlog_paraphrase,IGNORE,IGNORE,True,0.99,1842,1,,none,Kết quả khớp nhãn đã review.
+CP3-007,hard_domain_specific,real_chatlog_paraphrase,NORMAL,NORMAL,True,0.99,3375,1,,none,Kết quả khớp nhãn đã review.
+CP3-008,hard_domain_specific,real_chatlog_paraphrase,URGENT,URGENT,True,0.99,1806,1,,none,Kết quả khớp nhãn đã review.
+CP3-009,common,real_chatlog_paraphrase,IGNORE,IGNORE,True,0.99,1936,1,,none,Kết quả khớp nhãn đã review.
+CP3-010,common,real_chatlog_paraphrase,NORMAL,NORMAL,True,0.98,3781,1,,none,Kết quả khớp nhãn đã review.
+CP3-011,common,real_chatlog_paraphrase,NORMAL,NORMAL,True,0.98,2204,1,,none,Kết quả khớp nhãn đã review.
+CP3-012,common,real_chatlog_paraphrase,NORMAL,NORMAL,True,0.98,2013,1,,none,Kết quả khớp nhãn đã review.
+CP3-013,common,real_chatlog_paraphrase,NORMAL,NORMAL,True,0.99,2424,1,,none,Kết quả khớp nhãn đã review.
+CP3-014,common,real_chatlog_paraphrase,NORMAL,NORMAL,True,0.98,1966,1,,none,Kết quả khớp nhãn đã review.
+CP3-015,common,real_chatlog_paraphrase,URGENT,URGENT,True,0.99,1888,1,,none,Kết quả khớp nhãn đã review.
+CP3-016,common,real_chatlog_paraphrase,URGENT,URGENT,True,0.99,1826,1,,none,Kết quả khớp nhãn đã review.
+CP3-017,common,real_chatlog_paraphrase,IGNORE,IGNORE,True,0.98,1904,1,,none,Kết quả khớp nhãn đã review.
+CP3-018,common,constructed_reviewed,NORMAL,NORMAL,True,0.99,1991,1,,none,Kết quả khớp nhãn đã review.
+CP3-019,rare,constructed_reviewed,IGNORE,IGNORE,True,0.99,1871,1,,none,Kết quả khớp nhãn đã review.
+CP3-020,rare,constructed_reviewed,URGENT,URGENT,True,1.0,2071,1,,none,Kết quả khớp nhãn đã review.
+CP3-021,rare,constructed_reviewed,NEEDS_REVIEW,NEEDS_REVIEW,True,0.93,1797,1,,none,Kết quả khớp nhãn đã review.
+CP3-022,rare,constructed_reviewed,IGNORE,IGNORE,True,0.98,1893,1,,none,Kết quả khớp nhãn đã review.

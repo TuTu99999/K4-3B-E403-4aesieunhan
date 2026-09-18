@@ -1,0 +1,113 @@
+{
+  "case_count": 22,
+  "created_at_utc": "2026-09-18T08:53:16.143549+00:00",
+  "failed_count": 1,
+  "metrics": {
+    "accuracy": 0.9545,
+    "actionable_recall": {
+      "found": 14,
+      "total": 14,
+      "value": 1.0
+    },
+    "confusion_matrix": {
+      "IGNORE": {
+        "IGNORE": 6,
+        "NORMAL": 0,
+        "REVIEW": 0,
+        "URGENT": 0
+      },
+      "NORMAL": {
+        "IGNORE": 0,
+        "NORMAL": 9,
+        "REVIEW": 0,
+        "URGENT": 0
+      },
+      "REVIEW": {
+        "IGNORE": 1,
+        "NORMAL": 0,
+        "REVIEW": 1,
+        "URGENT": 0
+      },
+      "URGENT": {
+        "IGNORE": 0,
+        "NORMAL": 0,
+        "REVIEW": 0,
+        "URGENT": 5
+      }
+    },
+    "latency_ms": {
+      "p50": 2002,
+      "p95": 3375
+    },
+    "macro_f1": 0.9744,
+    "macro_f1_including_review": 0.8974,
+    "notification_intent_precision": {
+      "correct": 14,
+      "total": 14,
+      "value": 1.0
+    },
+    "per_class": {
+      "IGNORE": {
+        "f1": 0.9231,
+        "precision": 0.8571,
+        "recall": 1.0,
+        "support": 6
+      },
+      "NORMAL": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "support": 9
+      },
+      "REVIEW": {
+        "f1": 0.6667,
+        "precision": 1.0,
+        "recall": 0.5,
+        "support": 2
+      },
+      "URGENT": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "support": 5
+      }
+    },
+    "review_rate": {
+      "reviewed": 1,
+      "total": 22,
+      "value": 0.0455
+    },
+    "total": 22,
+    "total_tokens": 22837,
+    "urgent_recall": {
+      "found": 5,
+      "total": 5,
+      "value": 1.0
+    }
+  },
+  "model": "cx/gpt-5.6-luna",
+  "passed_count": 21,
+  "privacy": {
+    "message_ids": false,
+    "public_cases_are_paraphrased_or_constructed": true,
+    "raw_discord_content": false
+  },
+  "prompt_version": "classifier-v4",
+  "provider_errors": 0,
+  "quality_bar": {
+    "actionable_recall_at_least_85_percent": true,
+    "notification_precision_at_least_80_percent": true,
+    "urgent_recall_100_percent": true
+  },
+  "real_chatlog_derived_count": 16,
+  "run": "cp3_run_1",
+  "run_mode": "live_ai_no_cache",
+  "taxonomy_counts": {
+    "common": 10,
+    "hard_ambiguous": 2,
+    "hard_domain_specific": 2,
+    "hard_out_of_scope": 2,
+    "hard_source_truth": 2,
+    "rare": 4
+  }
+}

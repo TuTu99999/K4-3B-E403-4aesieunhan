@@ -1,0 +1,13 @@
+msg_id;guild;channel;author;is_bot;msg_type;created_at_vn;reply_to;mentions_bot;n_attachments;n_chars;content;label;label_reason
+M90001;DEMO-GUILD;channel_demo;D1001;False;message;18/09/2026 9:00;;False;0;14;Dạ em cảm ơn ạ;0;lời cảm ơn, không cần hỗ trợ
+M90002;DEMO-GUILD;channel_demo;D1002;False;message;18/09/2026 9:02;;False;0;34;Cho em xin tài liệu buổi hôm nay ạ;1;thắc mắc chung về tài liệu
+M90003;DEMO-GUILD;channel_demo;D1003;False;message;18/09/2026 9:04;;False;0;65;Em không nộp được bài và deadline còn 10 phút, TA hỗ trợ em với ạ;2;lỗi nộp bài sát deadline
+M90004;DEMO-GUILD;channel_demo;D9001;False;reply;18/09/2026 9:05;M90002;False;0;38;Tài liệu nằm trong kênh tài nguyên nhé;0;phản hồi hướng dẫn, không phải candidate
+M90005;DEMO-GUILD;channel_demo;D1001;False;reply;18/09/2026 9:06;M90001;False;0;19;À em tìm thấy rồi ạ;0;người dùng tự xác nhận đã xử lý
+M90006;DEMO-GUILD;channel_demo;BOT;True;message;18/09/2026 9:07;;False;0;40;Bản tin tự động của hệ thống đã sẵn sàng;0;tin nhắn bot
+M90007;DEMO-GUILD;channel_demo;D1004;False;message;18/09/2026 9:08;;False;0;44;"Cho em hỏi; mình xem điểm hoạt động ở đâu ạ?";1;câu hỏi tiện ích chung có dấu chấm phẩy
+M90008;DEMO-GUILD;channel_demo;D1005;False;message;18/09/2026 9:09;;False;0;9;Hay quá 😄;0;cảm thán và emoji
+M90009;DEMO-GUILD;channel_demo;D1006;False;message;18/09/2026 9:10;;False;0;65;Tài khoản học tập bị khóa nên em không vào buổi đang diễn ra được;2;lỗi tài khoản chặn truy cập buổi học
+M90010;DEMO-GUILD;channel_demo;D1007;False;message;18/09/2026 9:11;;False;0;43;Nhóm học tập tối đa bao nhiêu thành viên ạ?;1;thắc mắc chung về tạo nhóm
+M90011;DEMO-GUILD;channel_demo;D1008;False;message;18/09/2026 9:12;;False;0;29;Hôm nay mọi người học vui nhé;0;trò chuyện xã giao
+M90012;DEMO-GUILD;channel_demo;D1009;False;message;18/09/2026 9:13;;False;0;57;Em vẫn chưa được duyệt vào phòng học dù buổi đã bắt đầu ạ;2;lỗi truy cập buổi học đang diễn ra

@@ -1,0 +1,190 @@
+{
+  "baselines": {
+    "dataset_all_ignore_accuracy": 0.3333,
+    "keyword_urgent": {
+      "accuracy": 0.6667,
+      "actionable_recall": {
+        "found": 3,
+        "total": 4,
+        "value": 0.75
+      },
+      "confusion_matrix": {
+        "IGNORE": {
+          "IGNORE": 2,
+          "NORMAL": 0,
+          "REVIEW": 0,
+          "URGENT": 0
+        },
+        "NORMAL": {
+          "IGNORE": 1,
+          "NORMAL": 0,
+          "REVIEW": 0,
+          "URGENT": 1
+        },
+        "REVIEW": {
+          "IGNORE": 0,
+          "NORMAL": 0,
+          "REVIEW": 0,
+          "URGENT": 0
+        },
+        "URGENT": {
+          "IGNORE": 0,
+          "NORMAL": 0,
+          "REVIEW": 0,
+          "URGENT": 2
+        }
+      },
+      "latency_ms": {
+        "p50": 0,
+        "p95": 0
+      },
+      "macro_f1": 0.5333,
+      "macro_f1_including_review": 0.4,
+      "notification_intent_precision": {
+        "correct": 3,
+        "total": 3,
+        "value": 1.0
+      },
+      "per_class": {
+        "IGNORE": {
+          "f1": 0.8,
+          "precision": 0.6667,
+          "recall": 1.0,
+          "support": 2
+        },
+        "NORMAL": {
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 2
+        },
+        "REVIEW": {
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 0
+        },
+        "URGENT": {
+          "f1": 0.8,
+          "precision": 0.6667,
+          "recall": 1.0,
+          "support": 2
+        }
+      },
+      "review_rate": {
+        "reviewed": 0,
+        "total": 6,
+        "value": 0.0
+      },
+      "total": 6,
+      "total_tokens": 0,
+      "urgent_recall": {
+        "found": 2,
+        "total": 2,
+        "value": 1.0
+      }
+    },
+    "master_all_ignore_accuracy_reference": 0.878
+  },
+  "cache_hits": 6,
+  "case_count": 6,
+  "confidence_threshold": 0.7,
+  "created_at_utc": "2026-09-18T07:59:21.053932+00:00",
+  "dataset": "hard",
+  "metrics": {
+    "accuracy": 1.0,
+    "actionable_recall": {
+      "found": 4,
+      "total": 4,
+      "value": 1.0
+    },
+    "confusion_matrix": {
+      "IGNORE": {
+        "IGNORE": 2,
+        "NORMAL": 0,
+        "REVIEW": 0,
+        "URGENT": 0
+      },
+      "NORMAL": {
+        "IGNORE": 0,
+        "NORMAL": 2,
+        "REVIEW": 0,
+        "URGENT": 0
+      },
+      "REVIEW": {
+        "IGNORE": 0,
+        "NORMAL": 0,
+        "REVIEW": 0,
+        "URGENT": 0
+      },
+      "URGENT": {
+        "IGNORE": 0,
+        "NORMAL": 0,
+        "REVIEW": 0,
+        "URGENT": 2
+      }
+    },
+    "latency_ms": {
+      "p50": 1835,
+      "p95": 5213
+    },
+    "macro_f1": 1.0,
+    "macro_f1_including_review": 0.75,
+    "notification_intent_precision": {
+      "correct": 4,
+      "total": 4,
+      "value": 1.0
+    },
+    "per_class": {
+      "IGNORE": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "support": 2
+      },
+      "NORMAL": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "support": 2
+      },
+      "REVIEW": {
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "support": 0
+      },
+      "URGENT": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "support": 2
+      }
+    },
+    "review_rate": {
+      "reviewed": 0,
+      "total": 6,
+      "value": 0.0
+    },
+    "total": 6,
+    "total_tokens": 6229,
+    "urgent_recall": {
+      "found": 2,
+      "total": 2,
+      "value": 1.0
+    }
+  },
+  "model": "cx/gpt-5.6-luna",
+  "privacy": {
+    "contains_message_ids": false,
+    "contains_raw_content": false
+  },
+  "prompt_version": "classifier-v4",
+  "provider_errors": 0,
+  "quality_bar": {
+    "actionable_recall_at_least_85_percent": true,
+    "notification_precision_at_least_80_percent": true,
+    "urgent_recall_100_percent": true
+  },
+  "source_type": "constructed_reviewed"
+}

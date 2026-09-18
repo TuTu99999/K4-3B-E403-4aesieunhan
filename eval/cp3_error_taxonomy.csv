@@ -1,0 +1,9 @@
+﻿error_group,definition,run_1_count
+none,Kết quả khớp nhãn đã review.,21
+provider_or_schema_error,Không có output hợp lệ từ provider hoặc schema.,0
+missed_urgent,Bỏ sót tình huống cần hỗ trợ tức thời.,0
+overconfident_on_missing_context,Kết luận khi dữ liệu thiếu thay vì chuyển người review.,1
+false_positive_notification,Đưa hội thoại phiếm vào queue của TA.,0
+missed_actionable,Bỏ qua câu hỏi cần TA can thiệp.,0
+priority_over_escalation,Nâng câu hỏi bình thường thành khẩn.,0
+label_mismatch,Sai nhãn ngoài các nhóm trên.,0

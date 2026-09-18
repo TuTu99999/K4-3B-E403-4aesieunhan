@@ -1,0 +1,13 @@
+﻿case_id,bucket,expected,model_output,assistant_precheck,error_group,human_review_status
+CP3-001,hard_source_truth,IGNORE,IGNORE,dùng được,none,chưa xác nhận
+CP3-002,hard_source_truth,NORMAL,NORMAL,dùng được,none,chưa xác nhận
+CP3-003,hard_ambiguous,URGENT,URGENT,dùng được,none,chưa xác nhận
+CP3-004,hard_ambiguous,NEEDS_REVIEW,IGNORE,sửa được,overconfident_on_missing_context,chưa xác nhận
+CP3-005,hard_out_of_scope,NORMAL,NORMAL,dùng được,none,chưa xác nhận
+CP3-006,hard_out_of_scope,IGNORE,IGNORE,dùng được,none,chưa xác nhận
+CP3-007,hard_domain_specific,NORMAL,NORMAL,dùng được,none,chưa xác nhận
+CP3-008,hard_domain_specific,URGENT,URGENT,dùng được,none,chưa xác nhận
+CP3-009,common,IGNORE,IGNORE,dùng được,none,chưa xác nhận
+CP3-010,common,NORMAL,NORMAL,dùng được,none,chưa xác nhận
+CP3-011,common,NORMAL,NORMAL,dùng được,none,chưa xác nhận
+CP3-012,common,NORMAL,NORMAL,dùng được,none,chưa xác nhận
